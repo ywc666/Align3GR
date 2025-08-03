@@ -10,11 +10,11 @@ def get_topk_results(predictions, scores, targets, k, all_items=None):
         for i, seq in enumerate(predictions):
             if seq not in all_items:
                 scores[i] = -1000
-    # 步骤3: 批次处理
+
     for b in range(B):
         batch_seqs = predictions[b * k: (b + 1) * k] 
         batch_scores = scores[b * k: (b + 1) * k]
-        # 步骤4: 对每个批次进行排序
+        
         pairs = [(a, b) for a, b in zip(batch_seqs, batch_scores)]
         sorted_pairs = sorted(pairs, key=lambda x: x[1], reverse=True)
         target_item = targets[b]

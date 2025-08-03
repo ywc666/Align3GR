@@ -1,5 +1,3 @@
-"""测试模块，用于评估推荐系统模型的性能。"""
-
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 
