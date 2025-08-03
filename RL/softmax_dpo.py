@@ -79,8 +79,6 @@ def train(
                 dic[f"rejected{j+1}"].append(available_rejected[j])
         return dic
 
-
-    # 加载训练和验证数据
     data = load_dataset("json", data_files=data_files)
 
     columns = data["train"].column_names
