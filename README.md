@@ -1,3 +1,4 @@
+
 # Align³GR: Unified Multi-Level Alignment for LLM-based Generative Recommendation
 
 [![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/downloads/)

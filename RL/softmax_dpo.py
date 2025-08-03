@@ -53,27 +53,24 @@ def train(
         for i in range(1, neg_num+1):
             dic[f"rejected{i}"] = []
         
-        # 当使用batched=True时，examples是一个Dataset对象
-        # 可以通过字典方式访问列数据
-        queries = examples["query"]  # 字符串列表
-        responses = examples["response"]  # 列表的列表
-        rejecteds = examples["rejected"]  # 列表的列表
+        queries = examples["query"]
+        responses = examples["response"]
+        rejecteds = examples["rejected"]
         
         for i in range(len(queries)):
-            prompt = queries[i]  # 单个字符串
-            response = responses[i]  # 单个列表
-            rejected = rejecteds[i]  # 单个列表
+            prompt = queries[i]
+            response = responses[i]
+            rejected = rejecteds[i]
             
-            # 处理chosen（正确答案）
+            # chosen
             chosen = response if isinstance(response, list) else response
             
-            # 处理rejected（错误答案）
+            # rejected
             rejected_items = rejected if isinstance(rejected, list) else [rejected]
             
             dic["prompt"].append(prompt)
             dic["chosen"].append(chosen)
             
-            # 确保有足够的rejected样本
             available_rejected = rejected_items[:neg_num]
             while len(available_rejected) < neg_num:
                 available_rejected.append(rejected_items[0] if rejected_items else chosen)
@@ -108,15 +105,13 @@ def train(
 
     tokenizer = LlamaTokenizer.from_pretrained(resume_from_checkpoint)
     tokenizer.pad_token_id = (0)
-    # tokenizer.padding_side = "left"  # 注释掉这行，保持与 SFT 训练时一致
-    # 从 checkpoint 加载的 tokenizer 默认 padding_side="right"，与 SFT 训练时一致
-
+    
     base_model = LlamaForCausalLM.from_pretrained(model_name, 
                                                 device_map=device_map, 
                                                 # load_in_8bit=True,
                                                 # torch_dtype=torch.bfloat16,
                                                 quantization_config=bnb_config)
-    base_model.resize_token_embeddings(len(tokenizer)) # 这里需要resize tokenizer
+    base_model.resize_token_embeddings(len(tokenizer))
     base_model.config.use_cache = False
     base_model = prepare_model_for_kbit_training(base_model)
     base_model = PeftModel.from_pretrained(base_model, resume_from_checkpoint, is_trainable=True)
@@ -159,7 +154,7 @@ def train(
         remove_unused_columns=False,
         gradient_checkpointing_kwargs={'use_reentrant': True}, 
         ddp_find_unused_parameters=False,
-        label_names=[],  # 添加空的 label_names 来解决 PeftModel 警告
+        label_names=[],
         # deepspeed=deepspeed,
     )
 
