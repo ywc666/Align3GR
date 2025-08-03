@@ -126,7 +126,7 @@ def main(args):
     model = EcomGPT() 
     # model = DeepSeek()
 
-    # 读取用户对每个item的评论数据
+    # read reviews
     review_data_path = args.review_data_path
     item2id_path = args.item2id_path
     user2id_path = args.user2id_path
