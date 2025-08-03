@@ -1,0 +1,11 @@
+python process4cf.py\
+    --data_set_name Instruments \ # Beauty Yelp
+    --raw_data_file data/Instruments/Musical_Instruments_5.json \
+    --user_id_file data/Instruments/Instruments.user2id \
+    --item_id_file data/Instruments/Instruments.item2id \
+    --inter_file data/Instruments/Instruments.inter.json \
+    --item_file data/Instruments/Instruments.item.json \
+    --train_instances_file data/Instruments/train_instances \
+    --test_instances_file data/Instruments/test_instances \
+    --validation_instances_file data/Instruments/validation_instances \
+    --item_num_node_num_file data/Instruments/item_node_num.txt

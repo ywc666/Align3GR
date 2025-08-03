@@ -1,0 +1,22 @@
+python train_din.py \
+--data_set_name Instruments \ # Beauty Yelp
+--device cuda:0 \
+--have_processed_data True \
+--emb_dim 32 \
+--sum_pooling True \
+--sample_negative_num 60 \
+--feature_groups 5 4 2 2 1 1 1 1 1 1 \
+--train_sample_seg_cnt 10 \
+--parall 10 \
+--seq_len 20 \
+--min_seq_len 5 \
+--test_user_num 0 \
+--test_batch_size 100 \
+--batch_number 800000 \
+--batch_size 128 \
+--learning_rate 1e-3 \
+--use_wandb True \
+--wandb_project "DIN" \
+--wandb_entity "your_wandb_entity" \
+--wandb_name "DIN" \
+--wandb_dir "./DIN_Model"
